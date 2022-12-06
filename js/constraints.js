@@ -13,6 +13,7 @@ function newConstraint(stat, operator, number) {
 	statBox.setAttribute("placeholder", "Durability")
 	statBox.classList.add("constraint-child")
 	statBox.style.width = "47.5%"
+	statBox.value = ""
 	constraint.appendChild(statBox)
 
 	// add statbox data
@@ -29,6 +30,7 @@ function newConstraint(stat, operator, number) {
 	operatorBox.setAttribute("placeholder", ">=")
 	operatorBox.setAttribute("list", "operator-choices")
 	operatorBox.style.width = "15%"
+	operatorBox.value = ""
 	constraint.appendChild(operatorBox)
 
 	// add operatorbox data
@@ -50,6 +52,7 @@ function newConstraint(stat, operator, number) {
 	numberBox.setAttribute("type", "number")
 	numberBox.classList.add("constraint-child")
 	numberBox.style.width = "20%"
+	numberBox.value = ""
 	constraint.appendChild(numberBox)
 
 

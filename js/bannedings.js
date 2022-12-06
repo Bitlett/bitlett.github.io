@@ -13,6 +13,7 @@ function newBannedIng() {
 	ingBox.setAttribute("placeholder", "Large Lapis")
 	ingBox.classList.add("constraint-child")
 	ingBox.style.width = "91.5%"
+	ingBox.value = ""
 	banneding.appendChild(ingBox)
 
 	// add ingbox data
