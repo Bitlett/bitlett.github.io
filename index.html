@@ -9,51 +9,82 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito&display=swap">
 
-		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="/css/style.css">
 	</head>
 
 	<body>
 
 		<div class="bodycontent">
+
+
+
 			<div class="inputs">
+
 				<div class="inputpanel">
 					<div class="inputcontent">
 						<p>Recipe Type:</p>
+						<div class="recipetypes">
+							<div class="recipetype helmet" style="background-image: url('/images/new.png'); background-position: 45.45454545454546% 0;"></div>
+							<div class="recipetype chestplate" style="background-image: url('/images/new.png'); background-position: 54.5454545455% 0;"></div>
+							<div class="recipetype leggings" style="background-image: url('/images/new.png'); background-position: 63.6363636364% 0;"></div>
+							<div class="recipetype boots" style="background-image: url('/images/new.png'); background-position: 72.7272727273% 0;"></div>
+							<div class="recipetype ring" style="background-image: url('/images/new.png'); background-position: 81.8181818182% 0;"></div>
+							<div class="recipetype bracelet" style="background-image: url('/images/new.png'); background-position: 90.9090909091% 0;"></div>
+							<div class="recipetype necklace" style="background-image: url('/images/new.png'); background-position: 100% 0;"></div>
+						</div>
+						<div class="recipetypes">
+							<div class="recipetype bow" style="background-image: url('/images/new.png'); background-position: 0% 0;"></div>
+							<div class="recipetype spear" style="background-image: url('/images/new.png'); background-position: 9.09090909091% 0;"></div>
+							<div class="recipetype wand" style="background-image: url('/images/new.png'); background-position: 18.1818181818% 0;"></div>
+							<div class="recipetype dagger" style="background-image: url('/images/new.png'); background-position: 27.2727272727% 0;"></div>
+							<div class="recipetype relik" style="background-image: url('/images/new.png'); background-position: 36.3636363636% 0;"></div>
+						</div>
 					</div>
 				</div>
+
 				<div class="inputpanel">
 					<div class="inputcontent">
 						<p>Recipe Level:</p>
+						<input class="level-choice" list="level-choices" placeholder="103-105">
+						<datalist id="level-choices"></datalist>
 					</div>
 				</div>
+
 				<div class="inputpanel">
 					<div class="inputcontent">
 						<p>Desired Stat:</p>
-						<select class="desiredstat">
-							<option value="test1">test1</option>
-							<option value="test2">test2</option>
-							<option value="test3">test3</option>
-							<option value="test4">test4</option>
-						</select>
+						<input class="stat-choice" list="stat-choices" placeholder="Loot Quality"></select>
+						<datalist id="stat-choices"></datalist>
 					</div>
 				</div>
+
 				<div class="inputpanel">
 					<div class="inputcontent">
 						<p>Constraints:</p>
 					</div>
 				</div>
+
 				<div class="inputpanel">
 					<div class="inputcontent">
 						<p>Banned Ingredients:</p>
 					</div>
 				</div>
 			</div>
+
+
+
 			<div class="craft">
 				
 			</div>
+
+
+
 			<div class="stats">
 
 			</div>
+
+
+
 		</div>
 
 		<footer>
@@ -61,15 +92,18 @@
 				Made by
 				<b class="bitlet">Bitlet#8866</b>
 				with inspiration from
-				<b><a class="wynnbuilder" href="https://hppeng-wynn.github.io">hppeng's Wynnbuilder</a></b>
+				<b><a class="wynnbuilder" href="https://hppeng-wynn.github.io">hppeng's WynnBuilder</a></b>
 			</p>
 			<p>
-				Please report any bugs you find to me personally.
+				If you find any bugs, feel free to make a pull request fixing it.
+				<br>Alternatively, you can report them directly to me.
 			</p>
 			<p>
 				<a class="sourcecode" href="https://github.com/Bitlett/bitlett.github.io">Source code on Github</a>
 			</p>
 		</footer>
+
+		<script type="text/javascript" src="/js/init.js"></script>
 
 	</body>
 
