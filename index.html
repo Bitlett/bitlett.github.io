@@ -3,6 +3,7 @@
 
 	<head>
 		<title>Wynnware</title>
+		<meta charset="UTF-8">
 
 		<!-- nunito font, copying hppeng's wynnbuilder, copying wynnbuilder, which is copying wynndata -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,20 +25,20 @@
 					<div class="inputcontent">
 						<p>Recipe Type:</p>
 						<div class="recipetypes">
-							<div class="recipetype helmet" style="background-image: url('/images/new.png'); background-position: 45.45454545454546% 0;"></div>
-							<div class="recipetype chestplate" style="background-image: url('/images/new.png'); background-position: 54.5454545455% 0;"></div>
-							<div class="recipetype leggings" style="background-image: url('/images/new.png'); background-position: 63.6363636364% 0;"></div>
-							<div class="recipetype boots" style="background-image: url('/images/new.png'); background-position: 72.7272727273% 0;"></div>
-							<div class="recipetype ring" style="background-image: url('/images/new.png'); background-position: 81.8181818182% 0;"></div>
-							<div class="recipetype bracelet" style="background-image: url('/images/new.png'); background-position: 90.9090909091% 0;"></div>
-							<div class="recipetype necklace" style="background-image: url('/images/new.png'); background-position: 100% 0;"></div>
+							<button class="recipetype helmet" style="background-image: url('/images/new.png'); background-position: 45.45454545454546% 0;"></button>
+							<button class="recipetype chestplate" style="background-image: url('/images/new.png'); background-position: 54.5454545455% 0;"></button>
+							<button class="recipetype leggings" style="background-image: url('/images/new.png'); background-position: 63.6363636364% 0;"></button>
+							<button class="recipetype boots" style="background-image: url('/images/new.png'); background-position: 72.7272727273% 0;"></button>
+							<button class="recipetype ring" style="background-image: url('/images/new.png'); background-position: 81.8181818182% 0;"></button>
+							<button class="recipetype bracelet" style="background-image: url('/images/new.png'); background-position: 90.9090909091% 0;"></button>
+							<button class="recipetype necklace" style="background-image: url('/images/new.png'); background-position: 100% 0;"></button>
 						</div>
 						<div class="recipetypes">
-							<div class="recipetype bow" style="background-image: url('/images/new.png'); background-position: 0% 0;"></div>
-							<div class="recipetype spear" style="background-image: url('/images/new.png'); background-position: 9.09090909091% 0;"></div>
-							<div class="recipetype wand" style="background-image: url('/images/new.png'); background-position: 18.1818181818% 0;"></div>
-							<div class="recipetype dagger" style="background-image: url('/images/new.png'); background-position: 27.2727272727% 0;"></div>
-							<div class="recipetype relik" style="background-image: url('/images/new.png'); background-position: 36.3636363636% 0;"></div>
+							<button class="recipetype bow" style="background-image: url('/images/new.png'); background-position: 0% 0;"></button>
+							<button class="recipetype spear" style="background-image: url('/images/new.png'); background-position: 9.09090909091% 0;"></button>
+							<button class="recipetype wand" style="background-image: url('/images/new.png'); background-position: 18.1818181818% 0;"></button>
+							<button class="recipetype dagger" style="background-image: url('/images/new.png'); background-position: 27.2727272727% 0;"></button>
+							<button class="recipetype relik" style="background-image: url('/images/new.png'); background-position: 36.3636363636% 0;"></button>
 						</div>
 					</div>
 				</div>
@@ -59,14 +60,16 @@
 				</div>
 
 				<div class="inputpanel">
-					<div class="inputcontent">
+					<div class="inputcontent constraintlist">
 						<p>Constraints:</p>
+						<a class="add-constraint" >+</a>
 					</div>
 				</div>
 
 				<div class="inputpanel">
-					<div class="inputcontent">
+					<div class="inputcontent bannedinglist">
 						<p>Banned Ingredients:</p>
+						<a class="add-banneding" >+</a>
 					</div>
 				</div>
 			</div>
@@ -103,6 +106,8 @@
 			</p>
 		</footer>
 
+		<script type="text/javascript" src="/js/constraints.js"></script>
+		<script type="text/javascript" src="/js/bannedings.js"></script>
 		<script type="text/javascript" src="/js/init.js"></script>
 
 	</body>

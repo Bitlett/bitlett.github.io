@@ -5,7 +5,21 @@ console.log("Executing init...")
 
 
 
+// Recipe Type Init
+document.querySelectorAll(".recipetype").forEach(function(recipeTypeButton) {
+	recipeTypeButton.addEventListener("click", function() {
+		document.querySelectorAll(".recipetype").forEach(function(recipeTypeButton) {
+			recipeTypeButton.classList.remove("selected")
+		})
+		recipeTypeButton.classList.add("selected")
+	})
+})
 
+
+
+
+
+// Recipe Level Init
 const recipeLevels = [
 	"1-3",     "3-5",    "5-7",   "7-9",
     "10-13",   "13-15",  "15-17", "17-19",
@@ -20,17 +34,18 @@ const recipeLevels = [
     "100-103", "103-105"
 ]
 
-for (const lvl of recipeLevels) {
-	var opt = document.createElement("option")
-	opt.setAttribute("value", lvl)
-	document.querySelector("#level-choices").appendChild(opt)
+for (const recipeLevel of recipeLevels) {
+	var option = document.createElement("option")
+	option.setAttribute("value", recipeLevel)
+	document.querySelector("#level-choices").appendChild(option)
 }
 
 
 
 
 
-const rollableIDs = [
+// Desired Stat Init
+const craftableIDs = [
     "1st Spell Cost %",
     "1st Spell Raw",
     "2nd Spell Cost %",
@@ -77,13 +92,31 @@ const rollableIDs = [
     "Water Defense %"
 ];
 
-for (const id of rollableIDs) {
-	var opt = document.createElement("option")
-	opt.setAttribute("value", id)
-	opt.innerText = id
-	document.querySelector("#stat-choices").appendChild(opt)
+for (const id of craftableIDs) {
+	var option = document.createElement("option")
+	option.setAttribute("value", id)
+	option.innerText = id
+	document.querySelector("#stat-choices").appendChild(option)
 }
 
+
+
+
+
+// Constraints Init
+newConstraint("Durability", ">=", "150")
+document.querySelector(".add-constraint").addEventListener("click", function() {
+	newConstraint()
+})
+
+
+
+
+
+// Banned Ingredients Init
+document.querySelector(".add-banneding").addEventListener("click", function() {
+	newBannedIng()
+})
 
 
 

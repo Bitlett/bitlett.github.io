@@ -29,6 +29,14 @@ body {
 	height: 100%;
 }
 
+button {
+	border: none;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
 .inputpanel {
 	border-radius: 10px;
 	background-color: #1f1f1f;
@@ -84,7 +92,44 @@ input {
 	border-style: solid;
 }
 
+.selected {
+	border-width: 1px;
+	border-color:#52d1ff !important;
+	border: solid;
+}
 
+.constraint {
+	width: 100%;
+	margin-bottom: 5px;
+}
+
+.constraint-child {
+	margin-right: 2.5%;
+}
+
+.add-constraint {
+	font-size: 24px;
+}
+
+.add-constraint:hover {
+	cursor:pointer;
+}
+
+.remove-constraint {
+	font-size: 24px;
+}
+
+.remove-constraint:hover {
+	cursor:pointer;
+}
+
+.add-banneding {
+	font-size: 24px;
+}
+
+.add-banneding:hover {
+	cursor:pointer;
+}
 
 
 
