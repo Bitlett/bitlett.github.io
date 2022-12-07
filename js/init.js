@@ -79,7 +79,7 @@ const statMap = {
     'Defense':              'def',
     'Thorns':               'thorns',
     'Exploding':            'expd',
-    'Walk Speed':           'ws',
+    'Walk Speed':           'spd',
     'Attack Speed Bonus':   'atkTier',
     'Poison':               'poison',
     'Health Bonus':         'hpBonus',
