@@ -36,7 +36,7 @@ button:hover {
 	cursor: pointer;
 }
 
-.inputpanel {
+.panel {
 	border-radius: 10px;
 	background-color: #1f1f1f;
 	margin-bottom: 5%;
@@ -46,13 +46,19 @@ button:hover {
 	font-size: 18px;
 }
 
-.inputcontent {
+.panelcontent {
 	padding: 15px;
 }
 
-.inputcontent > p {
+.panelcontent > b > p {
 	margin: 0px;
-	margin-bottom: 7.5px;
+	margin-bottom: 12.5px;
+	text-align: center;
+}
+
+.panelcontent > p {
+	margin: 0px;
+	font-size: 16px;
 }
 
 .scrollfixpanel {
@@ -139,12 +145,40 @@ input {
 
 
 
-.gobutton {
+.ready {
 	color: #52d1ff;
 }
 
-.gobutton:hover {
+.ready:hover {
 	cursor:pointer;
+}
+
+.error {
+	color: #e74040;
+}
+
+
+
+
+
+
+
+
+
+
+.ingredientgrid {
+	display: flex;
+	max-width: 100%;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.ingredientbox {
+	border: 3px solid;
+	border-color:#FFFFFF;
+	width: 45%;
+	margin-top: 2.5%;
+	border-radius: 3px;
 }
 
 
