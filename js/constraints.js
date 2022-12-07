@@ -16,10 +16,6 @@ function newConstraint(stat, operator, number) {
 	statBox.value = ""
 	constraint.appendChild(statBox)
 
-	// add statbox data
-	var statBoxDatalist = document.querySelector("#stat-choices").cloneNode(true)
-	constraint.appendChild(statBoxDatalist)
-
 
 
 	// create box for operator

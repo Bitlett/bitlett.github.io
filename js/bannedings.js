@@ -10,15 +10,12 @@ function newBannedIng() {
 
 	// create box for ing
 	var ingBox = document.querySelector(".stat-choice").cloneNode(true)
-	ingBox.setAttribute("placeholder", "Large Lapis")
+	ingBox.setAttribute("placeholder", "Example: Large Lapis")
+	ingBox.setAttribute("list", "ing-choices")
 	ingBox.classList.add("constraint-child")
 	ingBox.style.width = "91.5%"
 	ingBox.value = ""
 	banneding.appendChild(ingBox)
-
-	// add ingbox data
-	var ingBoxDatalist = document.querySelector("#stat-choices").cloneNode(true)
-	banneding.appendChild(ingBoxDatalist)
 
 
 
