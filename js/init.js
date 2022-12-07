@@ -124,7 +124,6 @@ for (const id of Object.keys(statMap)) {
 	document.querySelector("#stat-choices").appendChild(option)
 }
 document.querySelector(".stat-choice").addEventListener("change", function(e) {
-    console.log(200)
     if ( statMap[e.target.value] == undefined ) {
         document.querySelector(".runpanel").querySelector("a").innerText = "Invalid Desired Stat!"
         document.querySelector(".runpanel").querySelector("a").classList.add("error")
@@ -135,7 +134,6 @@ document.querySelector(".stat-choice").addEventListener("change", function(e) {
     document.querySelector(".runpanel").querySelector("a").classList.remove("error")
     document.querySelector(".gobutton").classList.add("ready")
 })
-console.log(200)
 
 
 

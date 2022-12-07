@@ -10,11 +10,12 @@ onconnect = (e) => {
 		var bestIngs = [];
 		var bestStat = 0;
 		var bestDura = 0;
+		var bestEff = [100, 100, 100, 100, 100, 100]
 		
 		let i2loopcount = 0;
 		for (const i1 in usefulIngs) {
 			for (const i2 in usefulIngs) {
-				port.postMessage( 100 * i2loopcount / (Object.keys( usefulIngs ).length)**2 );
+				port.postMessage( [202, 100 * i2loopcount / (Object.keys( usefulIngs ).length)**2] );
 				i2loopcount += 1;
 				for (const i3 in usefulIngs) {
 					for (const i4 in usefulIngs) {
@@ -267,6 +268,7 @@ onconnect = (e) => {
 											bestIngs = [i1, i2, i3, i4, i5, i6]
 											bestStat = STATS[desiredStat]
 											bestDura = DURA
+											bestEff = eff
 										}
 									}
 		
@@ -278,7 +280,9 @@ onconnect = (e) => {
 				}
 			}
 		}
-		port.postMessage(bestIngs);
+
+		// best ingredients found!
+		port.postMessage( [200, bestIngs, bestEff] );
 
 	}
 

@@ -1,4 +1,4 @@
-function createStatInfoPanel(materials, ings) {
+function createStatInfoPanel(materials, ings, eff) {
 
 
 	// delete pre-existing stat info panel
@@ -27,7 +27,6 @@ function createStatInfoPanel(materials, ings) {
 
 	// now fill it with info
 	for (const material of materials) {
-		console.log(material)
 		var craftingMaterial = document.createElement("p")
 		craftingMaterial.innerText = "- " + material["count"] + "x " + material["name"]
 		panelContent.appendChild(craftingMaterial)
@@ -39,7 +38,6 @@ function createStatInfoPanel(materials, ings) {
 
 
 	for (const ing of ings) {
-		console.log(ing)
 
 		var ingredientBox = document.createElement("div")
 		ingredientBox.classList.add("ingredientbox")
@@ -49,6 +47,32 @@ function createStatInfoPanel(materials, ings) {
 		ingredientBox.appendChild(ingredientName)
 
 		ingredientGrid.appendChild(ingredientBox)
+	}
+
+
+	// finally, append it to the middle of the page
+	document.querySelector(".craft").appendChild(panel)
+
+
+	// fill in with efficiency matrix
+	// (possible but not guaranteed)
+	if (eff == undefined) { return }
+	let i = 0;
+	console.log(eff)
+	for (const effNumber of eff) {
+
+		const effDisplay = document.createElement("p")
+		if (effNumber > 100) {
+			effDisplay.classList.add("effdisplaygreen")
+		} else if (effNumber == 0) {
+			effDisplay.classList.add("effdisplaygray")
+		} else if (effNumber < 0) {
+			effDisplay.classList.add("effdisplayred")
+		}
+		effDisplay.innerText = "[" + effNumber + "%]"
+		ingredientGrid.childNodes[i].appendChild(effDisplay)
+
+		++i;
 	}
 
 

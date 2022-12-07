@@ -96,108 +96,7 @@ function filterIngredients(recipe, recipeLevel, desiredStat, bannedIngredients) 
 
 
 
-function findBestCraft(recipe, reqAsArray, desiredStat, usefulIngs) {
-	var bestIngs = [];
-	var bestStat = 0;
-	var bestDura = 0;
-	
-	let i2loopcount = 0;
-	for (const i1 in usefulIngs) {
-		for (const i2 in usefulIngs) {
-			console.log( 100 * i2loopcount / (Object.keys( usefulIngs ).length)**2 );
-			i2loopcount += 1;
-			for (const i3 in usefulIngs) {
-				for (const i4 in usefulIngs) {
-					for (const i5 in usefulIngs) {
-						for (const i6 in usefulIngs) {
-	
-							if (
-								(
-									usefulIngs[i1]["ids"][desiredStat] != undefined ||
-									usefulIngs[i2]["ids"][desiredStat] != undefined ||
-									usefulIngs[i3]["ids"][desiredStat] != undefined ||
-									usefulIngs[i4]["ids"][desiredStat] != undefined ||
-									usefulIngs[i5]["ids"][desiredStat] != undefined ||
-									usefulIngs[i6]["ids"][desiredStat] != undefined
-								) || (
-									false
-								)
-							) {
-	
-								const STATS = evaluateItem( [i1, i2, i3, i4, i5, i6], recipe, usefulIngs )
-								const DURA = STATS["dura"]
-	
-								reqValid = true
-								// check if the item complies with custom requirements
-								for (const req of reqAsArray) {
-									const VAR1 = req[0]
-									const OPERATOR = req[1]
-									const VAR2 = req[2]
-									if (STATS[VAR1] == undefined) { continue; }
-	
-									if (OPERATOR == "==") {
-										if ( !(STATS[VAR1] == VAR2) ) {
-											reqValid = false
-											break
-										}
-									} else
-	
-									if (OPERATOR == "!=") {
-										if ( !(STATS[VAR1] != VAR2) ) {
-											reqValid = false
-											break
-										}
-									} else
-	
-									if (OPERATOR == ">") {
-										if ( !(STATS[VAR1] > VAR2) ) {
-											reqValid = false
-											break
-										}
-									} else
-	
-									if (OPERATOR == ">=") {
-										if ( !(STATS[VAR1] >= VAR2) ) {
-											reqValid = false
-											break
-										}
-									} else
-	
-									if (OPERATOR == "<") {
-										if ( !(STATS[VAR1] < VAR2) ) {
-											reqValid = false
-											break
-										}
-									} else
-	
-									if (OPERATOR == "<=") {
-										if ( !(STATS[VAR1] <= VAR2) ) {
-											reqValid = false
-											break
-										}
-									}
-	
-								}
-	
-								if ( reqValid )  {
-									if ( (STATS[desiredStat] > bestStat) || ( (STATS[desiredStat] == bestStat) && (DURA > bestDura) ) ) {
-										bestIngs = [i1, i2, i3, i4, i5, i6]
-										bestStat = STATS[desiredStat]
-										bestDura = DURA
-										console.log("New Best!", bestStat, STATS, bestIngs)
-									}
-								}
-	
-							}
-	
-						}
-					}
-				}
-			}
-		}
-	}
-	return bestIngs;
-}
+
 
 
 
@@ -227,7 +126,36 @@ function bruteforceCraft() {
 	const bestCraftSharedWorker = new SharedWorker('./js/best_craft_sharedworker.js');
 
 	bestCraftSharedWorker.port.onmessage = (e) => {
-		console.log(e.data);
+
+		// progress indicator
+		if (e.data[0] == 202) {
+			document.querySelectorAll(".ingredientbox").forEach(function(ingbox) {
+				ingbox.childNodes[0].innerText = "Loading... (" + e.data[1].toFixed(1) + "%)"
+			})
+			return
+		}
+
+		// solution found! now display it!
+		const ings = e.data[1]
+		const eff = e.data[2]
+		createStatInfoPanel(
+			// materials
+			[
+				{
+					"name": materials[0]["item"],
+					"count": materials[0]["amount"],
+				}, {
+					"name": materials[1]["item"],
+					"count": materials[1]["amount"],
+				}
+			],
+	
+			// ings
+			ings,
+
+			// eff
+			eff
+		)
 	}
 
 
@@ -252,11 +180,6 @@ function bruteforceCraft() {
 	)
 
 	bestCraftSharedWorker.port.postMessage( [recipe, reqAsArray, desiredStat, usefulIngs] )
-
-
-	// const bestCraft = findBestCraft(recipe, reqAsArray, desiredStat, usefulIngs)
-
-	// console.log(bestCraft)
 
 
 
