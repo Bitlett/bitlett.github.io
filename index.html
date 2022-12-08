@@ -23,7 +23,7 @@
 
 				<div class="panel">
 					<div class="panelcontent">
-						<b><p>Recipe Type</p></b>
+						<b><p class="paneltitle">Recipe Type</p></b>
 						<div class="recipetypes">
 							<button class="recipetype helmet selected" style="background-image: url('/images/new.png'); background-position: 45.45454545454546% 0;"></button>
 							<button class="recipetype chestplate" style="background-image: url('/images/new.png'); background-position: 54.5454545455% 0;"></button>
@@ -45,7 +45,7 @@
 
 				<div class="panel">
 					<div class="panelcontent">
-						<b><p>Recipe Level</p></b>
+						<b><p class="paneltitle">Recipe Level</p></b>
 						<input class="level-choice" list="level-choices" placeholder="103-105">
 						<datalist id="level-choices"></datalist>
 					</div>
@@ -53,7 +53,7 @@
 
 				<div class="panel">
 					<div class="panelcontent">
-						<b><p>Desired Stat</p></b>
+						<b><p class="paneltitle">Desired Stat</p></b>
 						<input class="stat-choice" list="stat-choices" placeholder="Loot Quality"></select>
 						<datalist id="stat-choices"></datalist>
 					</div>
@@ -61,14 +61,14 @@
 
 				<div class="panel">
 					<div class="panelcontent constraintlist">
-						<b><p>Constraints</p></b>
+						<b><p class="paneltitle">Constraints</p></b>
 						<a class="add-constraint" >+</a>
 					</div>
 				</div>
 
 				<div class="panel">
 					<div class="panelcontent bannedinglist">
-						<b><p>Banned Ingredients</p></b>
+						<b><p class="paneltitle">Banned Ingredients</p></b>
 						<a class="add-banneding" >+</a>
 					</div>
 				</div>
@@ -120,7 +120,6 @@
 		<script type="text/javascript" src="/js/constraints.js"></script>
 		<script type="text/javascript" src="/js/bannedings.js"></script>
 		<script type="text/javascript" src="/js/init.js"></script>
-		<script type="text/javascript" src="/js/utils.js"></script>
 		<script type="text/javascript" src="/js/display.js"></script>
 		<script type="text/javascript" src="/js/bruteforce.js"></script>
 

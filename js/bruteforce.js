@@ -115,12 +115,16 @@ function filterIngredients(recipe, recipeLevel, desiredStat, bannedIngredients, 
 	for (let ing in ingredients) {
 		ing = ingredients[ing]
 
+		// if banned, skip
 		if ( bannedIngredients.includes(ing["name"]) ) { continue }
 
+		// if lvl too high, skip
 		if ( ing["lvl"] > usefulLevel ) { continue }
 
+		// if wrong skill, skip
 		if ( !(ing["skills"].includes(recipe[2])) ) { continue }
 
+		// if fails inglvl or ingeff contraints, skip
 		let failsConstraints = false
 		for (const constraint of constraints) {
 			if (constraint[0] == "inglvl") { // inglvl case

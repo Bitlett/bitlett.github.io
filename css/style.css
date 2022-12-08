@@ -10,6 +10,9 @@
 
 
 
+
+
+
 body {
 	background-color: #121212;
 	margin: 0px;
@@ -50,7 +53,7 @@ button:hover {
 	padding: 15px;
 }
 
-.panelcontent > b > p {
+.paneltitle {
 	margin: 0px;
 	margin-bottom: 12.5px;
 	text-align: center;
@@ -227,12 +230,24 @@ input {
 	margin-bottom: 5%;
 }
 
-.crafttext {
-	color: #0aa;
-	font-size: 24px;
+.itemattribute {
+	font-size: 16px;
+	color: #aaa;
 }
 
+.crafttext {
+	color: #0aa !important;
+	font-size: 24px !important;
+	text-align: center;
+}
 
+.healthtext {
+	color: #AA0000;
+}
+
+.combatlevelsymbol {
+	color: #5f5;
+}
 
 
 
@@ -273,3 +288,16 @@ footer > p {
 .sourcecode {
 	color: #52d1ff;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

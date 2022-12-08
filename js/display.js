@@ -18,6 +18,7 @@ function createStatInfoPanel(materials, ings, eff) {
 
 	var panelTitle = document.createElement("p")
 	panelTitle.innerText = "Recipe Info"
+	panelTitle.classList.add("paneltitle")
 	panelTitleBold.appendChild(panelTitle)
 
 	var craftingMaterialsText = document.createElement("p")
@@ -61,7 +62,7 @@ function createStatInfoPanel(materials, ings, eff) {
 	for (const effNumber of eff) {
 
 		const effDisplay = document.createElement("p")
-		if (effNumber > 100) {
+		if (effNumber > 0) {
 			effDisplay.classList.add("effdisplaygreen")
 		} else if (effNumber == 0) {
 			effDisplay.classList.add("effdisplaygray")
@@ -132,7 +133,33 @@ function createCraftPanel(recipeType, recipeLevel, recipeIngredients, usefulIngs
 	itemTitleBold.appendChild(itemTitle)
 
 	const STATS = evaluateItem(recipeIngredients, usefulIngs, recipes[recipeType + "-" + recipeLevel])
+	const recipe = recipeIDMap[ recipes[recipeType + "-" + recipeLevel][1] ]
 	console.log(STATS)
+	console.log(recipe)
+
+	// make sure everything in the stats is bold
+	var panelContentBold = document.createElement("b")
+	panelContent.appendChild(panelContentBold)
+
+	// health indicator, hide if it cant give/take health
+	if (recipe["healthOrDamage"]["minimum"] != 0 || recipe["healthOrDamage"]["maximum"] != 0) {
+		var healthText = document.createElement("p")
+		healthText.classList.add("healthtext")
+		healthText.innerText = "♥ Health: " + recipe["healthOrDamage"]["minimum"] + "-" + + recipe["healthOrDamage"]["maximum"]
+		panelContentBold.appendChild(healthText)
+	}
+
+	// combat level indicator
+	var combatLevel = document.createElement("p")
+	combatLevel.classList.add("itemattribute")
+	var combatLevelSymbol = document.createElement("a")
+	combatLevelSymbol.innerText = "✓ "
+	combatLevelSymbol.classList.add("combatlevelsymbol")
+	combatLevel.appendChild(combatLevelSymbol)
+	var combatLevelText = document.createElement("a")
+	combatLevelText.innerText = "Combat Lv. Min: " + recipe["lvl"]["minimum"] + "-" + + recipe["lvl"]["maximum"]
+	combatLevel.appendChild(combatLevelText)
+	panelContentBold.appendChild(combatLevel)
 
 	document.querySelector(".stats").appendChild(panel)
 
