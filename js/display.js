@@ -58,7 +58,6 @@ function createStatInfoPanel(materials, ings, eff) {
 	// (possible but not guaranteed)
 	if (eff == undefined) { return }
 	let i = 0;
-	console.log(eff)
 	for (const effNumber of eff) {
 
 		const effDisplay = document.createElement("p")

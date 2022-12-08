@@ -84,11 +84,14 @@ onconnect = (e) => {
 								
 									// First get the minimum item durability
 									let totalMinDurability = recipe[0] * 1.4 // [3,3] materials give the durability a 1.4x multiplier no matter the item type
+
+									// odd constrain types (stored elsewhere)
 									let totalAgiReq = 0;
 									let totalDefReq = 0;
 									let totalDexReq = 0;
 									let totalIntReq = 0;
 									let totalStrReq = 0;
+
 								
 									let eff = [
 										[100,100],
@@ -199,6 +202,10 @@ onconnect = (e) => {
 									stats["intreq"] = totalIntReq
 									stats["strreq"] = totalStrReq
 								
+									stats["sumsp"]  = stats["agi"] + stats["def"] + stats["dex"] + stats["dex"] + stats["int"] + stats["str"]
+									stats["summs"]  = stats["mr"] + stats["ms"]
+									stats["sumls"]  = stats["hprRaw"] * stats["hprPct"] + stats["ls"]
+
 								
 								
 									// coolio. now just return the calculated info!

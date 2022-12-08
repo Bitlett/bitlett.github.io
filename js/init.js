@@ -112,10 +112,12 @@ const statMap = {
     'Loot Quality':         'lq',
     'Gather XP Bonus':      'xpb',
     'Gather Speed Bonus':   'gSpd',
-    'Sum (skill points)':   'strreq + dexreq + intreq + agireq + defreq',
-    'Sum (Mana Sustain)':   'mr + ms',
-    'Sum (Life Sustain)':   'hpr + ls',
-    'Durability':           'dura'
+    'Sum (skill points)':   'sumsp',
+    'Sum (Mana Sustain)':   'summs',
+    'Sum (Life Sustain)':   'sumls',
+    'Durability':           'dura',
+    'Ingredient Level':     'inglvl',
+    'Ingredient Effect':    'ingeff'
 }
 for (const id of Object.keys(statMap)) {
 	var option = document.createElement("option")

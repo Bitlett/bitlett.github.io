@@ -50,18 +50,61 @@ function encodeCraft(recipeType, recipeLevel, ingredients) {
 
 
 
-function filterIngredients(recipe, recipeLevel, desiredStat, bannedIngredients) {
+function filterIngredients(recipe, recipeLevel, desiredStat, bannedIngredients, constraints) {
 	var usefulIngs = {}
 	const usefulLevel = parseInt( recipeLevel.split("-")[1] )
 	for (let ing in ingredients) {
 		ing = ingredients[ing]
-		ing["modsPos"] = false
 
 		if ( bannedIngredients.includes(ing["name"]) ) { continue }
 
 		if ( ing["lvl"] > usefulLevel ) { continue }
 
 		if ( !(ing["skills"].includes(recipe[2])) ) { continue }
+
+		let failsConstraints = false
+		for (const constraint of constraints) {
+			if (constraint[0] == "inglvl") { // inglvl case
+				if (constraint[1] == ">") {
+					if ( ing["lvl"] <= parseInt(constraint[2]) ) { failsConstraints = true; }
+				}
+				if (constraint[1] == ">=") {
+					if ( ing["lvl"] < parseInt(constraint[2]) ) { failsConstraints = true; }
+				}
+				if (constraint[1] == "==") {
+					if ( ing["lvl"] != parseInt(constraint[2]) ) { failsConstraints = true; }
+				}
+				if (constraint[1] == "!=") {
+					if ( ing["lvl"] == parseInt(constraint[2]) ) { failsConstraints = true; }
+				}
+				if (constraint[1] == "<=") {
+					if ( ing["lvl"] > parseInt(constraint[2]) ) { failsConstraints = true; }
+				}
+				if (constraint[1] == "<") {
+					if ( ing["lvl"] >= parseInt(constraint[2]) ) { failsConstraints = true; }
+				}
+			} else { // ingeff case
+				if (constraint[1] == ">") {
+					if ( ing["ids"][desiredStat] <= parseInt(constraint[2]) ) { failsConstraints = true; }
+				}
+				if (constraint[1] == ">=") {
+					if ( ing["ids"][desiredStat] < parseInt(constraint[2]) ) { failsConstraints = true; }
+				}
+				if (constraint[1] == "==") {
+					if ( ing["ids"][desiredStat] != parseInt(constraint[2]) ) { failsConstraints = true; }
+				}
+				if (constraint[1] == "!=") {
+					if ( ing["ids"][desiredStat] == parseInt(constraint[2]) ) { failsConstraints = true; }
+				}
+				if (constraint[1] == "<=") {
+					if ( ing["ids"][desiredStat] > parseInt(constraint[2]) ) { failsConstraints = true; }
+				}
+				if (constraint[1] == "<") {
+					if ( ing["ids"][desiredStat] >= parseInt(constraint[2]) ) { failsConstraints = true; }
+				}
+			}
+		}
+		if (failsConstraints) {continue}
 
 
 
@@ -84,13 +127,14 @@ function filterIngredients(recipe, recipeLevel, desiredStat, bannedIngredients) 
 			};
 		}
 		if (modposValid) {
-			ing["modsPos"] = true
 			usefulIngs[ing["name"]] = ing
 			continue
 		}
 
 	}
 
+	console.log( Object.keys(usefulIngs).length + " Useful ingredients found." )
+	console.log( usefulIngs )
 	return usefulIngs;
 }
 
@@ -115,13 +159,20 @@ function bruteforceCraft() {
 
 	const recipe = recipes[recipeType + "-" + recipeLevel]
 
-	let reqAsArray = craftRequirements.split(";")
-	for (var req in reqAsArray) {
-		if (req > 0) { reqAsArray[req] = reqAsArray[req].slice(1) }
-		reqAsArray[req] = reqAsArray[req].split(" ")
+	let reqAsSplit = craftRequirements.split(";")
+	let reqAsArray = []
+	let ingConstraints = []
+	for (var req in reqAsSplit) {
+		if (req > 0) { reqAsSplit[req] = reqAsSplit[req].slice(1) } // remove the space
+		// if req is inglvl or ingeff, add to ing filter contraints instead
+		if ( reqAsSplit[req].split(" ")[0] == "inglvl" || reqAsSplit[req].split(" ")[0] == "ingeff" ) {
+			ingConstraints.push( reqAsSplit[req].split(" ") )
+			continue;
+		}
+		reqAsArray[req] = reqAsSplit[req].split(" ") // otherwise just register normally
 	}
 
-	const usefulIngs = filterIngredients(recipe, recipeLevel, desiredStat, bannedIngredients)
+	const usefulIngs = filterIngredients(recipe, recipeLevel, desiredStat, bannedIngredients, ingConstraints)
 
 	const bestCraftSharedWorker = new SharedWorker('./js/best_craft_sharedworker.js');
 
