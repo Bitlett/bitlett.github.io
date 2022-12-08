@@ -35,7 +35,66 @@ function getCraftInfo() {
 
 
 
-function encodeCraft(recipeType, recipeLevel, ingredients) {
+// Base 64 encoding tools
+// https://stackoverflow.com/a/27696695
+// Modified for fixed precision
+
+// Base64.fromInt(-2147483648); // gives "200000"
+// Base64.toInt("200000"); // gives -2147483648
+Base64 = (function () {
+    var digitsStr =
+    //   0       8       16      24      32      40      48      56     63
+    //   v       v       v       v       v       v       v       v      v
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+-";
+    var digits = digitsStr.split('');
+    var digitsMap = {};
+    for (var i = 0; i < digits.length; i++) {
+        digitsMap[digits[i]] = i;
+    }
+    return {
+        fromIntV: function(int32) {
+            var result = '';
+            while (true) {
+                result = digits[int32 & 0x3f] + result;
+                int32 >>>= 6;
+                if (int32 === 0)
+                    break;
+            }
+            return result;
+        },
+        fromIntN: function(int32, n) {
+            var result = '';
+            for (let i = 0; i < n; ++i) {
+                result = digits[int32 & 0x3f] + result;
+                int32 >>= 6;
+            }
+            return result;
+        },
+        toInt: function(digitsStr) {
+            var result = 0;
+            var digits = digitsStr.split('');
+            for (var i = 0; i < digits.length; i++) {
+                result = (result << 6) + digitsMap[digits[i]];
+            }
+            return result;
+        },
+        toIntSigned: function(digitsStr) {
+            var result = 0;
+            var digits = digitsStr.split('');
+            if (digits[0] && (digitsMap[digits[0]] & 0x20)) {
+                result = -1;
+            }
+            for (var i = 0; i < digits.length; i++) {
+                result = (result << 6) + digitsMap[digits[i]];
+            }
+            return result;
+        }
+    };
+})();
+
+
+
+function encodeCraft(recipe, ingredients, usefulIngs) {
     let craft_string =  "1" + 
     Base64.fromIntN(usefulIngs[ingredients[0]]["id"], 2) + 
     Base64.fromIntN(usefulIngs[ingredients[1]]["id"], 2) +
@@ -43,7 +102,7 @@ function encodeCraft(recipeType, recipeLevel, ingredients) {
     Base64.fromIntN(usefulIngs[ingredients[3]]["id"], 2) +
     Base64.fromIntN(usefulIngs[ingredients[4]]["id"], 2) +
     Base64.fromIntN(usefulIngs[ingredients[5]]["id"], 2) + 
-    Base64.fromIntN(recipes[recipeType + "-" + recipeLevel][1],2) + 
+    Base64.fromIntN(recipe[1],2) + 
     91
     return craft_string;
 }
@@ -140,6 +199,182 @@ function filterIngredients(recipe, recipeLevel, desiredStat, bannedIngredients, 
 
 
 
+function evaluateItem( ingredientNames, usefulIngs, recipe ) {
+	const ingredients = [
+		usefulIngs[ingredientNames[0]], usefulIngs[ingredientNames[1]],
+		usefulIngs[ingredientNames[2]], usefulIngs[ingredientNames[3]],
+		usefulIngs[ingredientNames[4]], usefulIngs[ingredientNames[5]]
+	]
+	const isTouchingTable = [
+		[[[false,true],[true,false],[false,false]],[[true,false],[false,true],[false,false]]],[[[true,false],[false,true],[true,false]],[[false,true],[true,false],[false,true]]],[[[false,false],[true,false],[false,true]],[[false,false],[false,true],[true,false]]]
+	]
+	const notTouchingTable = [
+		[
+			[
+				[false,false],
+				[false,true],
+				[true,true]
+			],
+			[
+				[false,false],
+				[true,false],
+				[true,true]
+			]
+		],[
+			[
+				[false,true],
+				[false,false],
+				[false,true]
+			],
+			[
+				[true,false],
+				[false,false],
+				[true,false]
+			]
+		],
+		[
+			[
+				[true,true],
+				[false,true],
+				[false,false]
+			],
+			[
+				[true,true],
+				[true,false],
+				[false,false]
+			]
+		]
+	]
+
+	// First get the minimum item durability
+	let totalMinDurability = recipe[0] * 1.4 // [3,3] materials give the durability a 1.4x multiplier no matter the item type
+
+	// odd constrain types (stored elsewhere)
+	let totalAgiReq = 0;
+	let totalDefReq = 0;
+	let totalDexReq = 0;
+	let totalIntReq = 0;
+	let totalStrReq = 0;
+
+
+	let eff = [
+		[100,100],
+		[100,100],
+		[100,100]
+	];
+
+	let n = -1
+	for (let ing of ingredients) {
+		++n
+
+		// First calculate the item's final minimum durability
+		totalMinDurability += ing["itemIDs"]["dura"]
+
+
+
+		// Now calculate eff matrix
+		// y and x will refer to the eff matrix indexes.
+		let y = Math.floor(n / 2);
+		let x = n % 2;
+		
+		const posMods = ing["posMods"]
+		const above = posMods["above"]
+		const under = posMods["under"]
+		const left = posMods["left"]
+		const right = posMods["right"]
+		const touching = posMods["touching"]
+		const nottouching = posMods["notTouching"]
+
+		if (above != 0) {
+			for (let i = 0; i < y; ++i) {
+				eff[i][x] += above
+			}
+		}
+
+		if (under != 0) {
+			for (let i = y+1; i < 3; ++i) {
+				eff[i][x] += under
+			}
+		}
+
+		if (left != 0) {
+			for (let j = 0; j < x; ++j) {
+				eff[y][j] += left
+			}
+		}
+
+		if (right != 0) {
+			for (let j = x+1; j < 2; ++j) {
+				eff[y][j] += right
+			}
+		}
+
+		if (touching != 0 || nottouching != 0) {
+			for (let j = 0; j < 3; ++j) {
+				for (let i = 0; i < 2; ++i) {
+
+					eff[j][i] += posMods["touching"] * isTouchingTable[y][x][j][i]
+
+					eff[j][i] += posMods["notTouching"] * notTouchingTable[y][x][j][i]
+
+				}
+			}
+		}
+
+	}
+
+	// Next, apply eff matrix to desired stat
+	eff = eff.flat()
+
+	let stats = {}
+
+	n = -1
+	for (let ing of ingredients) {
+		++n
+		const effectiveness = eff[n]/100
+		const itemIDs = ing["itemIDs"]
+		const ids = ing["ids"]
+
+		if (effectiveness > 0) {
+			for (const id in ids) {
+				if (stats[id] == undefined) {
+					stats[id] = 0
+				}
+				stats[id] += Math.floor( ids[id][1] * effectiveness )
+			}
+		} else {
+			for (const id in ids) {
+				if (stats[id] == undefined) {
+					stats[id] = 0
+				}
+				stats[id] += Math.floor( ids[id][0] * effectiveness )
+			}
+		}
+
+		totalAgiReq += Math.floor( itemIDs["agiReq"] * effectiveness )
+		totalDefReq += Math.floor( itemIDs["defReq"] * effectiveness )
+		totalDexReq += Math.floor( itemIDs["dexReq"] * effectiveness )
+		totalIntReq += Math.floor( itemIDs["intReq"] * effectiveness )
+		totalStrReq += Math.floor( itemIDs["strReq"] * effectiveness )
+
+	}
+
+	stats["dura"] = Math.floor(totalMinDurability)
+	stats["agireq"] = totalAgiReq
+	stats["defreq"] = totalDefReq
+	stats["dexreq"] = totalDexReq
+	stats["intreq"] = totalIntReq
+	stats["strreq"] = totalStrReq
+
+
+
+	// coolio. now just return the calculated info!
+	return stats
+}
+
+
+
+
 
 
 
@@ -207,6 +442,10 @@ function bruteforceCraft() {
 			// eff
 			eff
 		)
+
+		// display the item itself
+		const itemStats = evaluateItem(ings, usefulIngs, recipe)
+		createCraftPanel(recipeType, recipeLevel, ings, usefulIngs)
 	}
 
 

@@ -80,3 +80,60 @@ function createStatInfoPanel(materials, ings, eff) {
 
 
 }
+
+
+
+function createCraftPanel(recipeType, recipeLevel, recipeIngredients, usefulIngs) {
+
+	// delete pre-existing craft panel
+	document.querySelector(".stats").innerHTML = ""
+
+	
+	// load map stuff
+	const backgroundPositionMap = {
+		"Helmet": "45.45454545454546%",
+		"Chestplate": "54.5454545455%",
+		"Leggings": "63.6363636364%",
+		"Boots": "72.7272727273%",
+		"Ring": "81.8181818182%",
+		"Bracelet": "90.9090909091%",
+		"Necklace": "100%",
+		"Bow": "0%",
+		"Spear": "9.09090909091%",
+		"Wand": "18.1818181818%",
+		"Dagger": "27.2727272727%",
+		"Relik": "36.3636363636%"
+	}
+
+
+	// now create craft panel
+	var panel = document.createElement("div")
+	panel.classList.add("itempanel")
+
+	var panelContent = document.createElement("div")
+	panelContent.classList.add("panelcontent")
+	panel.appendChild(panelContent)
+
+
+	// now fill it with info
+	var itemIcon = document.createElement("div")
+	itemIcon.classList.add("itemicon")
+	itemIcon.style.backgroundImage =  "url('/images/new.png')"
+	itemIcon.style.backgroundPosition = backgroundPositionMap[recipeType] + " 0"
+	panelContent.appendChild(itemIcon)
+
+
+	var itemTitleBold = document.createElement("b")
+	panelContent.appendChild(itemTitleBold)
+
+	var itemTitle = document.createElement("p")
+	itemTitle.classList.add("crafttext")
+	itemTitle.innerText = "CR-" + encodeCraft(recipes[recipeType + "-" + recipeLevel], recipeIngredients, usefulIngs)
+	itemTitleBold.appendChild(itemTitle)
+
+	const STATS = evaluateItem(recipeIngredients, usefulIngs, recipes[recipeType + "-" + recipeLevel])
+	console.log(STATS)
+
+	document.querySelector(".stats").appendChild(panel)
+
+}
