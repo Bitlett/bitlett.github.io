@@ -150,6 +150,7 @@ document.querySelector(".stat-choice").addEventListener("change", function(e) {
 
 // Constraints Init
 newConstraint("Durability", ">=", "150")
+newConstraint("Ingredient Level", ">", "75")
 document.querySelector(".add-constraint").addEventListener("click", function() {
 	newConstraint()
 })
