@@ -197,6 +197,7 @@ function createCraftPanel(recipeType, recipeLevel, recipeIngredients, usefulIngs
 
 	// stat indicators
 	for (const stat in STATS) {
+		if (STATS[stat][0] == 0 && STATS[stat][1] == 0) {continue}
 		if (STATS[stat] == undefined) {continue}
 		var statRow = document.createElement("p")
 		statRow.classList.add("itemattribute")
