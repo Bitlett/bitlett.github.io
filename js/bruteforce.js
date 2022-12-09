@@ -422,7 +422,7 @@ function bruteforceCraft() {
 			ingConstraints.push( reqAsSplit[req].split(" ") )
 			continue;
 		}
-		reqAsArray[req] = reqAsSplit[req].split(" ") // otherwise just register normally
+		reqAsArray.push( reqAsSplit[req].split(" ") ) // otherwise just register normally
 	}
 
 	const usefulIngs = filterIngredients(recipe, recipeLevel, desiredStat, bannedIngredients, ingConstraints)
@@ -467,7 +467,6 @@ function bruteforceCraft() {
 		)
 
 		// display the item itself
-		const itemStats = evaluateItem(ings, usefulIngs, recipe)
 		createCraftPanel(recipeType, recipeLevel, ings, usefulIngs)
 	}
 
@@ -492,6 +491,7 @@ function bruteforceCraft() {
 		]
 	)
 
+	console.log(reqAsArray)
 	bestCraftSharedWorker.port.postMessage( [recipe, reqAsArray, desiredStat, usefulIngs] )
 
 
