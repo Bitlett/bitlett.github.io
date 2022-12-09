@@ -194,8 +194,8 @@ onconnect = (e) => {
 										totalStrReq += Math.floor( itemIDs["strReq"] * effectiveness )
 								
 									}
-								
-									stats["dura"] = Math.floor(totalMinDurability)
+									
+									stats["mindura"] = Math.floor(totalMinDurability)
 									stats["agireq"] = totalAgiReq
 									stats["defreq"] = totalDefReq
 									stats["dexreq"] = totalDexReq
@@ -215,15 +215,14 @@ onconnect = (e) => {
 
 
 
-
-									const DURA = STATS["dura"]
+									const DURA = STATS["mindura"]
 		
 									reqValid = true
 									// check if the item complies with custom requirements
 									for (const req of reqAsArray) {
 										const VAR1 = req[0]
 										const OPERATOR = req[1]
-										const VAR2 = req[2]
+										const VAR2 = parseFloat(req[2])
 										if (STATS[VAR1] == undefined) { continue; }
 		
 										if (OPERATOR == "==") {

@@ -132,10 +132,11 @@ function createCraftPanel(recipeType, recipeLevel, recipeIngredients, usefulIngs
 	itemTitle.innerText = "CR-" + encodeCraft(recipes[recipeType + "-" + recipeLevel], recipeIngredients, usefulIngs)
 	itemTitleBold.appendChild(itemTitle)
 
-	const STATS = evaluateItem(recipeIngredients, usefulIngs, recipes[recipeType + "-" + recipeLevel])
+	var STATS = evaluateItem(recipeIngredients, usefulIngs, recipes[recipeType + "-" + recipeLevel])
 	const recipe = recipeIDMap[ recipes[recipeType + "-" + recipeLevel][1] ]
-	console.log(STATS)
-	console.log(recipe)
+	const duraRange = STATS["dura"]
+	STATS["dura"] = undefined
+	STATS["mindura"] = undefined
 
 	// make sure everything in the stats is bold
 	var panelContentBold = document.createElement("b")
@@ -161,6 +162,88 @@ function createCraftPanel(recipeType, recipeLevel, recipeIngredients, usefulIngs
 	combatLevel.appendChild(combatLevelText)
 	panelContentBold.appendChild(combatLevel)
 
+	// skill point min indicators
+	const MINSP = {
+		"Strength": STATS["strreq"],
+		"Agility": STATS["agireq"],
+		"Defense": STATS["defreq"],
+		"Intelligence": STATS["intreq"],
+		"Dexterity": STATS["dexreq"],
+	}
+	for (const skill in MINSP) {
+		const count = MINSP[skill]
+		if (count == 0) { continue; }
+		var reqSkill = document.createElement("p")
+		reqSkill.classList.add("itemattribute")
+		var checkmarkSymbol = document.createElement("a")
+		checkmarkSymbol.innerText = "✓ "
+		checkmarkSymbol.classList.add("combatlevelsymbol")
+		reqSkill.appendChild(checkmarkSymbol)
+		var reqSkillText = document.createElement("a")
+		reqSkillText.innerText = skill + " Min: " + count
+		reqSkill.appendChild(reqSkillText)
+		panelContentBold.appendChild(reqSkill)
+	}
+	STATS["intreq"] = undefined
+	STATS["strreq"] = undefined
+	STATS["dexreq"] = undefined
+	STATS["defreq"] = undefined
+	STATS["agireq"] = undefined
+
+	// spacer
+	var spacer = document.createElement("p")
+	spacer.classList.add("spacer")
+	panelContentBold.appendChild(spacer)
+
+	// stat indicators
+	for (const stat in STATS) {
+		if (STATS[stat] == undefined) {continue}
+		var statRow = document.createElement("p")
+		statRow.classList.add("itemattribute")
+		statRow.classList.add("itemstat")
+		var statMin = document.createElement("a")
+		statMin.innerText = STATS[stat][0] + unitMap[stat]
+		statRow.appendChild(statMin)
+		var statName = document.createElement("a")
+		statName.innerText = statNameMap[stat]
+		statRow.appendChild(statName)
+		var statMax = document.createElement("a")
+		statMax.innerText = STATS[stat][1] + unitMap[stat]
+		statRow.appendChild(statMax)
+		if( ( effectTypeMap[statNameMap[stat]] && !(STATS[stat][1] > 0) ) || ( !effectTypeMap[statNameMap[stat]] && (STATS[stat][1] > 0) ) ) {
+			statMax.classList.add("effdisplaygreen")
+		} else {
+			statMax.classList.add("effdisplayred")
+		}
+		if( ( effectTypeMap[statNameMap[stat]] && !(STATS[stat][0] > 0) ) || ( !effectTypeMap[statNameMap[stat]] && (STATS[stat][0] > 0) ) ) {
+			statMin.classList.add("effdisplaygreen")
+		} else {
+			statMin.classList.add("effdisplayred")
+		}
+		panelContentBold.appendChild(statRow)
+	}
+
+	// spacer
+	spacer = document.createElement("p")
+	spacer.classList.add("spacer")
+	panelContentBold.appendChild(spacer)
+
+	// durability
+	var duraRow = document.createElement("p")
+	duraRow.classList.add("itemattribute")
+	duraCraftType = document.createElement("a")
+	duraCraftType.classList.add("crafttype")
+	duraCraftType.innerText = "Crafted " + recipeType + " "
+	duraRow.appendChild(duraCraftType)
+	duraText = document.createElement("a")
+	duraText.innerText = "[" + duraRange[0] + "-" + duraRange[1] + " Durability]"
+	duraText.classList.add("duratext")
+	duraRow.appendChild(duraText)
+	panelContentBold.appendChild(duraRow)
+
+
+
 	document.querySelector(".stats").appendChild(panel)
+
 
 }

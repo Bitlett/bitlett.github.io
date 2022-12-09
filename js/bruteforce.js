@@ -251,7 +251,11 @@ function evaluateItem( ingredientNames, usefulIngs, recipe ) {
 	]
 
 	// First get the minimum item durability
-	let totalMinDurability = recipe[0] * 1.4 // [3,3] materials give the durability a 1.4x multiplier no matter the item type
+	// [3,3] materials give the durability a 1.4x multiplier no matter the item type
+	let totalDurability = [
+		recipeIDMap[recipe[1]]["durability"]["minimum"] * 1.4,
+		recipeIDMap[recipe[1]]["durability"]["maximum"] * 1.4
+	]
 
 	// odd constrain types (stored elsewhere)
 	let totalAgiReq = 0;
@@ -272,7 +276,8 @@ function evaluateItem( ingredientNames, usefulIngs, recipe ) {
 		++n
 
 		// First calculate the item's final minimum durability
-		totalMinDurability += ing["itemIDs"]["dura"]
+		totalDurability[0] += ing["itemIDs"]["dura"]
+		totalDurability[1] += ing["itemIDs"]["dura"]
 
 
 
@@ -327,7 +332,7 @@ function evaluateItem( ingredientNames, usefulIngs, recipe ) {
 
 	}
 
-	// Next, apply eff matrix to desired stat
+	// Next, apply eff matrix
 	eff = eff.flat()
 
 	let stats = {}
@@ -342,16 +347,18 @@ function evaluateItem( ingredientNames, usefulIngs, recipe ) {
 		if (effectiveness > 0) {
 			for (const id in ids) {
 				if (stats[id] == undefined) {
-					stats[id] = 0
+					stats[id] = [0, 0]
 				}
-				stats[id] += Math.floor( ids[id][1] * effectiveness )
+				stats[id][0] += Math.floor( ids[id][0] * effectiveness )
+				stats[id][1] += Math.floor( ids[id][1] * effectiveness )
 			}
 		} else {
 			for (const id in ids) {
 				if (stats[id] == undefined) {
-					stats[id] = 0
+					stats[id] = [0, 0]
 				}
-				stats[id] += Math.floor( ids[id][0] * effectiveness )
+				stats[id][1] += Math.floor( ids[id][0] * effectiveness )
+				stats[id][0] += Math.floor( ids[id][1] * effectiveness )
 			}
 		}
 
@@ -363,7 +370,14 @@ function evaluateItem( ingredientNames, usefulIngs, recipe ) {
 
 	}
 
-	stats["dura"] = Math.floor(totalMinDurability)
+	if (totalDurability[0] < 1) { totalDurability[0] = 1 }
+	if (totalDurability[1] < 1) { totalDurability[1] = 1 }
+	stats["mindura"] = Math.floor(totalDurability[0])
+	stats["dura"] = [
+		Math.floor(totalDurability[0]),
+		Math.floor(totalDurability[1])
+	]
+	
 	stats["agireq"] = totalAgiReq
 	stats["defreq"] = totalDefReq
 	stats["dexreq"] = totalDexReq
@@ -416,12 +430,17 @@ function bruteforceCraft() {
 	const bestCraftSharedWorker = new SharedWorker('./js/best_craft_sharedworker.js');
 
 	bestCraftSharedWorker.port.onmessage = (e) => {
-
 		// progress indicator
 		if (e.data[0] == 202) {
 			document.querySelectorAll(".ingredientbox").forEach(function(ingbox) {
 				ingbox.childNodes[0].innerText = "Loading... (" + e.data[1].toFixed(1) + "%)"
 			})
+			return
+		}
+
+		// debug - console.log substitute
+		if (e.data[0] == 300) {
+			console.log(e.data[1])
 			return
 		}
 

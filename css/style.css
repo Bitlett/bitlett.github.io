@@ -190,15 +190,15 @@ input {
 }
 
 .effdisplaygreen {
-	color:#5f5;
+	color:#5f5 !important;
 }
 
 .effdisplaygray {
-	color:#aaa;
+	color:#aaa !important;
 }
 
 .effdisplayred {
-	color:#f55;
+	color:#f55 !important;
 }
 
 
@@ -232,7 +232,7 @@ input {
 
 .itemattribute {
 	font-size: 16px;
-	color: #aaa;
+	margin: 0;
 }
 
 .crafttext {
@@ -247,6 +247,23 @@ input {
 
 .combatlevelsymbol {
 	color: #5f5;
+}
+
+.spacer {
+	margin-top: 24px;
+}
+
+.itemstat {
+	display: flex;
+	justify-content: space-between;
+}
+
+.crafttype {
+	color: #0aa !important;
+}
+
+.duratext {
+	color: #555
 }
 
 
