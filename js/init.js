@@ -116,7 +116,7 @@ const statMap = {
     'Sprint Regen':         'sprintReg',
     'Jump Height':          'jh',
     'Loot Quality':         'lq',
-    'Gather XP Bonus':      'xpb',
+    'Gather XP Bonus':      'gXp',
     'Gather Speed Bonus':   'gSpd',
     'Sum (skill points)':   'sumsp',
     'Sum (Mana Sustain)':   'summs',
@@ -249,13 +249,6 @@ const effectTypeMap = {
     'lq': true,
     'xpb': true,
     'gSpd': true,
-}
-function swap(json){
-    var ret = {};
-    for (var key in json) {
-        ret[json[key]] = key;
-    }
-    return ret;
 }
 const statNameMap = swap(statMap)
 const unitMap = {
