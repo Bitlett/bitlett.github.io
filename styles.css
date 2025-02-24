@@ -1,0 +1,70 @@
+@font-face {
+	font-family: ChicagoMoonshine;
+	src: url(assets/fonts/ChicagoMoonshine.ttf);
+}
+
+body {
+	margin: 0;
+	background-color: #0f0f0f;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	overflow: hidden;
+}
+
+.content {
+	text-align: center;
+	font-family: ChicagoMoonshine;
+	color: white;
+	position: relative;
+	margin-top: -5vh;
+}
+
+h1 {
+	margin: 0px;
+	font-weight: normal;
+	font-size: 15vh;
+}
+
+h2 {
+	margin: 0px;
+	margin-top: -2vh;
+	font-weight: normal;
+	font-size: 2.5vh;
+	letter-spacing: 0.825vh;
+}
+
+.buttons {
+	display: flex;
+	justify-content: center;
+	gap: 6vh;
+	margin-top: 4vh;
+}
+
+.buttons img {
+	filter: brightness(75%);
+	height: 2.75vh;
+}
+
+.buttons img:hover {
+	filter: brightness(100%);
+}
+
+.background {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	background: url('assets/images/logo.png') no-repeat center center/cover;
+	opacity: 10%;
+	animation: rotateBackground 60s linear infinite;
+}
+
+@keyframes rotateBackground {
+	from {
+		transform: rotate(0deg) scale(1.61803398875);
+	}
+	to {
+		transform: rotate(360deg) scale(1.61803398875);
+	}
+}
