@@ -13,6 +13,77 @@ body {
 	overflow: hidden;
 }
 
+:root {
+	--background-square-size: calc(100vh / 21);
+}
+
+.background {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	background: url('assets/images/backdrop/base.png');
+	background-size: 100vw 100vh;
+	overflow: hidden;
+}
+
+.background-tile {
+	position: fixed;
+	margin-top: -25vh;
+	margin-left: -25vw;
+	width: max(200vw, 200vh);
+	height: max(200vw, 200vh);
+	image-rendering: pixelated;
+	transform: rotate(15deg);
+	transform-origin: center;
+	opacity: 37%;
+}
+
+.background-dark-tile {
+	background: url('assets/images/backdrop/grid-tile-dark.png');
+	background-size: var(--background-square-size);
+	background-repeat: repeat;
+	animation: scrollDarkTile 1.33s linear infinite;
+}
+
+@keyframes scrollDarkTile {
+	from { background-position: 0 0; }
+	to { background-position: calc(1 * var(--background-square-size)) calc(1 * var(--background-square-size)); }
+}
+
+.background-light-tile {
+	background: url('assets/images/backdrop/grid-tile-light.png');
+	background-size: var(--background-square-size);
+	background-repeat: repeat;
+	animation: scrollLightTile 1.33s linear infinite;
+}
+
+@keyframes scrollLightTile {
+	from { background-position: 0 0; }
+	to { background-position: calc(-1 * var(--background-square-size)) calc(-1 * var(--background-square-size)); }
+}
+
+.background-overlay {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+}
+
+.background-gradient {
+	background: url('assets/images/backdrop/gradient.png');
+	background-size: 100vw 100vh;
+}
+
+.background-vignette {
+	background: url('assets/images/backdrop/vignette.png');
+	background-size: 100vw 100vh;
+	opacity: 42%
+}
+
+
+
+
+
+
 .content {
 	text-align: center;
 	font-family: ChicagoMoonshine;
@@ -49,22 +120,4 @@ h2 {
 
 .buttons img:hover {
 	filter: brightness(100%);
-}
-
-.background {
-	position: fixed;
-	width: 100vw;
-	height: 100vh;
-	background: url('assets/images/logo.png') no-repeat center center/cover;
-	opacity: 10%;
-	animation: rotateBackground 60s linear infinite;
-}
-
-@keyframes rotateBackground {
-	from {
-		transform: rotate(0deg) scale(1.61803398875);
-	}
-	to {
-		transform: rotate(360deg) scale(1.61803398875);
-	}
 }
