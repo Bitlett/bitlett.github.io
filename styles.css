@@ -73,14 +73,8 @@ body {
 	opacity: 30%;
 }
 
-/* .background-vignette {
-	background: radial-gradient(ellipse 150% 200% at bottom, transparent 0%, transparent 33%, #000000CC 100%);
-	opacity: 100%
-} */
-
 .background-vignette {
-	background-color: hsl(0, 50%, 50%);
-	filter: brightness(300%);
+	background: radial-gradient(ellipse 150% 200% at bottom, transparent 0%, transparent 33%, #000000CC 100%);
 	opacity: 100%
 }
 
