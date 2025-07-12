@@ -28,8 +28,8 @@ body {
 
 .background-tile {
 	position: fixed;
-	margin-top: -25vh;
-	margin-left: -25vw;
+	margin-top: -50vh;
+	margin-left: -50vw;
 	width: max(200vw, 200vh);
 	height: max(200vw, 200vh);
 	image-rendering: pixelated;
@@ -95,15 +95,15 @@ body {
 h1 {
 	margin: 0px;
 	font-weight: normal;
-	font-size: 15vh;
+	font-size: min(15vh, 20vw);
 }
 
 h2 {
 	margin: 0px;
-	margin-top: -2vh;
+	margin-top: max(-2vh, -2.67vw);
 	font-weight: normal;
-	font-size: 2.5vh;
-	letter-spacing: 0.825vh;
+	font-size: min(2.5vh, 3.33vw);
+	letter-spacing: min(0.825vh, 1.1vw);
 }
 
 .buttons {
