@@ -33,8 +33,7 @@ body {
 	width: max(200vw, 200vh);
 	height: max(200vw, 200vh);
 	image-rendering: pixelated;
-	transform: rotate(15deg);
-	transform-origin: center;
+	will-change: transform;
 	opacity: 37%;
 }
 
@@ -46,8 +45,8 @@ body {
 }
 
 @keyframes scrollDarkTile {
-	from { background-position: 0 0; }
-	to { background-position: calc(1 * var(--background-square-size)) calc(1 * var(--background-square-size)); }
+	from { transform: rotate(15deg) translate(0, 0); }
+	to { transform: rotate(15deg) translate(calc(1 * var(--background-square-size)), calc(1 * var(--background-square-size))); }
 }
 
 .background-light-tile {
@@ -58,8 +57,8 @@ body {
 }
 
 @keyframes scrollLightTile {
-	from { background-position: 0 0; }
-	to { background-position: calc(-1 * var(--background-square-size)) calc(-1 * var(--background-square-size)); }
+	from { transform: rotate(15deg) translate(0, 0); }
+	to { transform: rotate(15deg) translate(calc(-1 * var(--background-square-size)), calc(-1 * var(--background-square-size))); }
 }
 
 .background-overlay {
